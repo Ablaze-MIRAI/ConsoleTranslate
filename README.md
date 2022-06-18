@@ -21,7 +21,7 @@ translate -t en こんにちは
 translate -t en "こんにちは 世界"
 
 - 翻訳元の言語も指定する
-translate -t en -f こんにちは
+translate -t en -f ja こんにちは
 ```
 
 対応している言語の言語コード一覧は [言語サポート  |  Cloud Translation  |  Google Cloud](https://cloud.google.com/translate/docs/languages) を参照
