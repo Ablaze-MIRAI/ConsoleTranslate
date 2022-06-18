@@ -50,7 +50,7 @@ func loadConfig(dev bool) (*config, error) {
 		rund := filepath.Dir(runp)
 		configfp = rund + "/config.json"
 	} else {
-		configfp = "/config.json"
+		configfp = "./config.json"
 	}
 	//configfp = "" // カスタムパスで上書きする場合
 	f, err := os.Open(configfp)
