@@ -5,3 +5,6 @@
 # Build
 translate
 *.exe
+
+# API
+config.dev.json
