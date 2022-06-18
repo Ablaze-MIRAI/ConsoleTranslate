@@ -52,6 +52,7 @@ func loadConfig(dev bool) (*config, error) {
 	} else {
 		configfp = "/config.json"
 	}
+	//configfp = "" // カスタムパスで上書きする場合
 	f, err := os.Open(configfp)
 	if err != nil {
 		return nil, err
