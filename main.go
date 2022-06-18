@@ -16,7 +16,7 @@ const (
 	app_name = "ConsoleTranslate"
 	version  = "1.0.0"
 	command  = "translate"
-	git_repo = "https://github.com/"
+	git_repo = "https://github.com/Ablaze-MIRAI/ConsoleTranslate"
 )
 
 func main() {
