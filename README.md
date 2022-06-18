@@ -30,7 +30,7 @@ translate -t en -f こんにちは
 
 1. [APIキー発行](./API.md)を参考にGAS(Google Apps Script)でAPIキーを発行
 
-2. [Latest Release](./releases) からビルド済みバイナリをダウンロード
+2. [Latest Release](https://github.com/Ablaze-MIRAI/ConsoleTranslate/releases) からビルド済みバイナリをダウンロード
 
 3. ダウンロードしたバイナリを解凍して好きなディレクトリへ移動
 
