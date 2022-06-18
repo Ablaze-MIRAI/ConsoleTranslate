@@ -14,7 +14,7 @@ const (
 	// DEV MODE
 	dev      = false
 	app_name = "ConsoleTranslate"
-	version  = "1.0.0"
+	version  = "1.0.1"
 	command  = "translate"
 	git_repo = "https://github.com/Ablaze-MIRAI/ConsoleTranslate"
 )
