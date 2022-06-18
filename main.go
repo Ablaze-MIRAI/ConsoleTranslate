@@ -35,9 +35,10 @@ func main() {
 			fmt.Printf("%s: 設定ファイルの読み込みに失敗\n設定は `%s` を参照してください", gocolor.Red("Error"), gocolor.Purple(git_repo))
 			os.Exit(0)
 		}
-		to, to_fi := getFlag("-t", "--to", os.Args)
-		from, from_fi := getFlag("-f", "--from", os.Args)
-		flags := []int{to_fi, to_fi + 1, from_fi, from_fi + 1}
+		to, to_fi := getFlag("-t", "--to", os.Args, false)
+		from, from_fi := getFlag("-f", "--from", os.Args, false)
+		out_json, json_fi := getFlag("-j", "--json", os.Args, true)
+		flags := []int{to_fi, to_fi + 1, from_fi, from_fi + 1, json_fi}
 		var args []string
 		for i, v := range os.Args {
 			if i != 0 {
@@ -47,7 +48,11 @@ func main() {
 			}
 		}
 		if to == "" {
-			fmt.Printf("%s: 必要な引数がありません\n詳細は `%s` を参照してください。", gocolor.Red("Error"), gocolor.Cayn(command+" help"))
+			if out_json == "" {
+				fmt.Printf("%s: 必要な引数がありません\n詳細は `%s` を参照してください。", gocolor.Red("Error"), gocolor.Cayn(command+" help"))
+			} else {
+				fmt.Print(`{"code": 400, "msg": "arguments_error"}`)
+			}
 			os.Exit(0)
 		}
 
@@ -59,23 +64,39 @@ func main() {
 
 		resp, err := http.Get(urlGen(to, from, args[0], conf.Api))
 		if err != nil {
-			fmt.Printf("%s: リクエストに失敗しました\nインターネットの接続、APIの設定等を確認してください\n[Log]%s", gocolor.Red("Error"), err)
+			if out_json == "" {
+				fmt.Printf("%s: リクエストに失敗しました\nインターネットの接続、APIの設定等を確認してください\n[Log]%s", gocolor.Red("Error"), err)
+			} else {
+				fmt.Print(`{"code": 400, "msg": "request_error"}`)
+			}
 			os.Exit(0)
 		}
 		defer resp.Body.Close()
 
 		if resp.StatusCode != 200 {
-			fmt.Printf("%s: リクエストに失敗しました\n[Log]HTTP Status: `%s`", gocolor.Red("Error"), resp.Status)
+			if out_json == "" {
+				fmt.Printf("%s: リクエストに失敗しました\n[Log]HTTP Status: `%s`", gocolor.Red("Error"), resp.Status)
+			} else {
+				fmt.Print(`{"code": 400, "msg": "respose_error"}`)
+			}
 			os.Exit(0)
 		}
 
 		body, _ := io.ReadAll(resp.Body)
 		if err := json.Unmarshal(body, response); err != nil {
-			fmt.Printf("%s: リクエストの解析に失敗しました\n[Log]%s", gocolor.Red("Error"), err)
+			if out_json == "" {
+				fmt.Printf("%s: リクエストの解析に失敗しました\n[Log]%s", gocolor.Red("Error"), err)
+			} else {
+				fmt.Print(`{"code": 400, "msg": "parse_error"}`)
+			}
 			os.Exit(0)
 		}
 		if response.Msg == "unexpected" {
-			fmt.Printf("%s: 翻訳に失敗しました\n翻訳に対応している言語は `%s` を参照してください。\n[Log]API Error", gocolor.Red("Error"), gocolor.Purple("https://cloud.google.com/translate/docs/languages"))
+			if out_json == "" {
+				fmt.Printf("%s: 翻訳に失敗しました\n翻訳に対応している言語は `%s` を参照してください。\n[Log]API Error", gocolor.Red("Error"), gocolor.Purple("https://cloud.google.com/translate/docs/languages"))
+			} else {
+				fmt.Print(`{"code": 500, "msg": "translation_error"}`)
+			}
 			os.Exit(0)
 		}
 
@@ -85,9 +106,13 @@ func main() {
 		} else {
 			lang_info = from
 		}
-		fmt.Printf("%s\n %s", gocolor.Purple("[Before: "+lang_info+"]"), args[0])
-		fmt.Print("\n  ↓\n")
-		fmt.Printf("%s\n %s", gocolor.Green("[After: "+to+"]"), response.Text)
+		if out_json == "" {
+			fmt.Printf("%s\n %s", gocolor.Purple("[Before: "+lang_info+"]"), args[0])
+			fmt.Print("\n  ↓\n")
+			fmt.Printf("%s\n %s", gocolor.Green("[After: "+to+"]"), response.Text)
+		} else {
+			fmt.Printf(`{"code": 200, "msg": "succes", "to": "%s", from: "%s", "text": "%s"}`, to, lang_info, response.Text)
+		}
 		os.Exit(0)
 	}
 }

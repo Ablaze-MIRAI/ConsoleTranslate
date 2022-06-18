@@ -10,18 +10,21 @@
 
 # ⭐ 使い方
 
-```powershell
-- ヘルプを表示
+```bash
+# ヘルプを表示
 translate help
 
-- 翻訳先の言語を指定して翻訳
+# 翻訳先の言語を指定して翻訳
 translate -t en こんにちは
 
-- 空白のあるテキストを翻訳
+# 空白のあるテキストを翻訳
 translate -t en "こんにちは 世界"
 
-- 翻訳元の言語も指定する
+# 翻訳元の言語も指定する
 translate -t en -f ja こんにちは
+
+# 結果をJSONで出力
+translate -t en こんにちは --json
 ```
 
 対応している言語の言語コード一覧は [言語サポート  |  Cloud Translation  |  Google Cloud](https://cloud.google.com/translate/docs/languages) を参照
@@ -52,7 +55,9 @@ go mod tidy
 
 **開発モードに切り替える** *(これを行わないと`go run`が使用できません)*
 
-以下のように書き換えてください
+`config.json` を `config.dev.json` にリネームし
+
+`main.go` を以下のように書き換えてください
 
 ```go
 // main.go [Line: 13~19]

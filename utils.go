@@ -9,14 +9,20 @@ import (
 	"path/filepath"
 )
 
-func getFlag(k string, kf string, s []string) (string, int) {
+func getFlag(k string, kf string, s []string, oneflag bool) (string, int) {
 	for i, v := range s {
 		if k == v {
+			if oneflag {
+				return s[i], i
+			}
 			return s[i+1], i
 		}
 	}
 	for i, v := range s {
 		if kf == v {
+			if oneflag {
+				return s[i], i
+			}
 			return s[i+1], i
 		}
 	}
@@ -50,7 +56,7 @@ func loadConfig(dev bool) (*config, error) {
 		rund := filepath.Dir(runp)
 		configfp = rund + "/config.json"
 	} else {
-		configfp = "/config.json"
+		configfp = "./config.dev.json"
 	}
 	f, err := os.Open(configfp)
 	if err != nil {
