@@ -83,3 +83,5 @@ go build -o translate.exe .
 [Comamoca](https://github.com/Comamoca)
 
 [お餅のCreeeper](https://github.com/creeper-0910)
+
+[nexryai](https://github.com/nexryai)
