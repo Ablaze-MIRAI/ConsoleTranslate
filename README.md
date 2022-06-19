@@ -55,14 +55,15 @@ translate json en こんにちは
 ```bash
 # Clone this repository
 
+copy config.go.sample config.go
+copy config.json.sample config.json
+
 go mod tidy
 ```
 
 **開発モードに切り替える** *(これを行わないと`go run`が使用できません)*
 
-`config.json.sample` を `config.dev.json` にリネームし
-
-`config.go.sample`を`config.go`にリネームして`config.go`以下のように書き換えてください
+`config.go`以下のように書き換えてください
 
 ```go
 // config.go [Line: 6~9]
@@ -78,14 +79,14 @@ dev      = true //false
 
 ```bash
 # Linux
-mv config.go.sample config.go
-mv config.json.sample config.json
+copy config.go.sample config.go
+copy config.json.sample config.json
 go build -o translate *.go
 
 
 # Windows (PowerShell 7.x)
-mv config.go.sample config.go
-mv config.json.sample config.json
+copy config.go.sample config.go
+copy config.json.sample config.json
 go build -o translate.exe .
 ```
 
