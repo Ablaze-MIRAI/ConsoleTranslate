@@ -4,8 +4,9 @@ package main
 // https://github.com/Ablaze-MIRAI/ConsoleTranslate/tree/main#-%E9%96%8B%E7%99%BA
 
 const (
-	dev     = false
-	repo    = "https://github.com/Ablaze-MIRAI/ConsoleTranslate"
-	command = "translate"
-	version = "2.0.0"
+	app_name = "ConsoleTranslate"
+	version  = "2.0.0"
+	repo     = "https://github.com/Ablaze-MIRAI/ConsoleTranslate"
+	command  = "translate"
+	dev      = false
 )
