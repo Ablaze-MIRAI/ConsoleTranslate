@@ -32,7 +32,8 @@ func main() {
 		if os.Args[1] == "json" {
 			isjson = true
 		}
-		if len(os.Args) < sif(isjson, 4, 3) {
+		println(len(os.Args))
+		if len(os.Args)-1 <= sif(isjson, 3, 2) {
 			fmt.Print(errorMsgs(0, sifs(isjson, "json", "console"), ""))
 			os.Exit(0)
 		}
