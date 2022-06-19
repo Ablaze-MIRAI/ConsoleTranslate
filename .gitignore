@@ -1,0 +1,12 @@
+# Editor
+.vscode
+.idea
+
+# Build
+translate
+*.exe
+
+# Dev
+config.go
+config.json
+config.dev.json
