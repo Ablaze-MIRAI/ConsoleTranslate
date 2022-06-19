@@ -11,7 +11,7 @@ import (
 func main() {
 	config, err := configLoader(dev)
 	if err != nil || config.Api == "" {
-		fmt.Print(errorMsgs(5, "console", ""))
+		fmt.Print(errorMsgs(5, "console", "\n[Log]"), err)
 		os.Exit(0)
 	}
 	if len(os.Args) < 2 {
@@ -32,7 +32,7 @@ func main() {
 		if os.Args[1] == "json" {
 			isjson = true
 		}
-		if !(len(os.Args) >= sif(isjson, 3, 2)) {
+		if len(os.Args) < sif(isjson, 4, 3) {
 			fmt.Print(errorMsgs(0, sifs(isjson, "json", "console"), ""))
 			os.Exit(0)
 		}
@@ -43,13 +43,17 @@ func main() {
 			os.Exit(0)
 		}
 
-		// Out put result
+		// Out put json
+		if isjson {
+			fmt.Printf(`{"code": %s, "msg": "%s", "text": "%s"}`, "200", "success", resp.Text)
+			os.Exit(0)
+		}
+
+		// Out put nomal
 		fmt.Println(gocolor.Purple("[Before]"))
 		fmt.Println(" ", os.Args[sif(isjson, 3, 2)])
 		fmt.Print("  ↓\n")
 		fmt.Println(gocolor.Green("[After: " + os.Args[sif(isjson, 2, 1)] + "]"))
 		fmt.Println(" ", resp.Text)
 	}
-
-	//fmt.Println(gocolor.Purple("[Unused]"), command, version, repo, dev)
 }

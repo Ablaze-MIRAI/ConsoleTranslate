@@ -36,7 +36,7 @@ func configLoader(dev bool) (*Config, error) {
 	// Set Path
 	var path string
 	if dev {
-		path = "./config.dev.json"
+		path = "./config.json"
 	} else {
 		prosess_path, err := os.Executable()
 		if err != nil {
