@@ -50,7 +50,7 @@ translate json en こんにちは
 
 # 🌠 開発
 
-## ⚠ 開発は1系(1.x.x)から大きく変更があります
+### ⚠ 開発は1系(1.x.x)から大きく変更があります
 
 ```bash
 # Clone this repository
