@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/url"
 	"os"
+	"time"
 
+	"github.com/briandowns/spinner"
 	"github.com/code-raisan/gocolor"
 )
 
@@ -37,11 +39,18 @@ func main() {
 			os.Exit(0)
 		}
 
+		//Spinner Start
+		s := spinner.New(spinner.CharSets[35], 50*time.Millisecond)
+		s.Start()
+
 		resp, ecode, emsg, err := Translate(urlGen(config.Api, os.Args[sif(isjson, 2, 1)], url.QueryEscape(os.Args[sif(isjson, 3, 2)])))
 		if err != nil || ecode != -1 {
 			fmt.Print(errorMsgs(ecode, sifs(isjson, "json", "console"), sifs(emsg != "", emsg, "")))
 			os.Exit(0)
 		}
+
+		//Spinner Stop
+		s.Stop()
 
 		// Out put json
 		if isjson {
