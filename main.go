@@ -40,7 +40,7 @@ func main() {
 		}
 
 		//Spinner Start
-		s := spinner.New(spinner.CharSets[35], 50*time.Millisecond)
+		s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 		s.Start()
 
 		resp, ecode, emsg, err := Translate(urlGen(config.Api, os.Args[sif(isjson, 2, 1)], url.QueryEscape(os.Args[sif(isjson, 3, 2)])))
