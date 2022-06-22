@@ -70,12 +70,12 @@ APIキーは[APIキー発行の手順(DeepL・Google共通)](./API.md)で発行�
 # Clone this repository
 
 # Linux
-copy config.go.sample config.go
-copy config.json.sample config.json
-
-# Windows (PowerShell 7.x)
 cp config.go.sample config.go
 cp config.json.sample config.json
+
+# Windows (PowerShell 7.x)
+copy config.go.sample config.go
+copy config.json.sample config.json
 
 go mod tidy
 ```
