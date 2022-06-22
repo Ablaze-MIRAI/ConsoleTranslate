@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -172,8 +171,6 @@ func TranslateDeepL(Text string, Target string, ApiType string, ApiKey string) (
 	if err != nil {
 		return nil, 3, "", err
 	}
-
-	fmt.Println(string(body))
 
 	// Purse JSON
 	var response *DeepLResponse
