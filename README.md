@@ -38,7 +38,7 @@ translate json en こんにちは
 
 3. バイナリを置いたディレクトリにパスを通す
 
-4. *DeepL*(v2.0.3より対応)* または *GoogleTranslate(GAS)* のAPIキーを発行してください。
+4. *DeepL(v2.0.3より対応)* または *GoogleTranslate(GAS)* のAPIキーを発行してください。
   
    [APIキー発行の手順(DeepL・Google共通)](./API.md)を参考にしてください。
 
