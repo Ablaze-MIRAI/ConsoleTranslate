@@ -1,0 +1,35 @@
+name: goreleaser
+
+on:
+  push:
+    tags:
+      - "*"
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+      - name: Copy Env
+        run: |
+          mv config.go.sample config.go
+          mv config.json.sample config.json
+      - name: Build Go
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o dist/translate *.go
+          GOOS=windows GOARCH=amd64 go build -o dist/translate.exe *.go
+          mv README.md dist/README.md
+          mv LICENSE dist/LICENSE
+          cd dist
+          zip ConsoleTranslate_Linux translate README.md LICENSE
+          zip ConsoleTranslate_Windows translate.exe README.md LICENSE
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Binalys
+          path: dist/*.zip
