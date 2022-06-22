@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/briandowns/spinner"
@@ -16,6 +17,21 @@ func main() {
 		fmt.Print(errorMsgs(5, "console", "\n[Log]"), err)
 		os.Exit(0)
 	}
+
+	env := strings.Split(config.Api, ",")
+	var ApiKey string
+	var ApiProvider string
+	var DeepLPlan string
+	if len(env) > 2 && env[0] == "deepl" {
+		ApiKey = env[2]
+		ApiProvider = "deepl"
+		DeepLPlan = env[1]
+	} else {
+		ApiKey = config.Api
+		ApiProvider = "google"
+		DeepLPlan = "none"
+	}
+
 	if len(os.Args) < 2 {
 		fmt.Print(errorMsgs(0, "console", ""))
 		os.Exit(0)
@@ -43,10 +59,31 @@ func main() {
 		s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 		s.Start()
 
-		resp, ecode, emsg, err := Translate(urlGen(config.Api, os.Args[sif(isjson, 2, 1)], url.QueryEscape(os.Args[sif(isjson, 3, 2)])))
+		var translatedText string
+		var respDeepL *DeepLResponse
+		var resp *Response
+		var ecode int
+		var emsg string
+		var err error
+		var ProviderType string
+		if ApiProvider != "deepl" {
+			resp, ecode, emsg, err = Translate(urlGen(ApiKey, os.Args[sif(isjson, 2, 1)], url.QueryEscape(os.Args[sif(isjson, 3, 2)])))
+		} else {
+			respDeepL, ecode, emsg, err = TranslateDeepL(os.Args[sif(isjson, 3, 2)], os.Args[sif(isjson, 2, 1)], DeepLPlan, ApiKey)
+		}
 		if err != nil || ecode != -1 {
-			fmt.Print(errorMsgs(ecode, sifs(isjson, "json", "console"), sifs(emsg != "", emsg, "")))
+			fmt.Print(errorMsgs(ecode, sifs(isjson, "json", "console"), sifs(emsg != "", emsg, "")), err)
 			os.Exit(0)
+		}
+		if ApiProvider == "deepl" {
+			translatedText = respDeepL.Translations[0].Text
+		} else {
+			translatedText = resp.Text
+		}
+		if ApiProvider == "deepl" {
+			ProviderType = "DeepL"
+		} else {
+			ProviderType = "Google"
 		}
 
 		//Spinner Stop
@@ -54,15 +91,15 @@ func main() {
 
 		// Out put json
 		if isjson {
-			fmt.Printf(`{"code": %s, "msg": "%s", "text": "%s"}`, "200", "success", resp.Text)
+			fmt.Printf(`{"code": %s, "msg": "%s", "provider": "%s", "text": "%s"}`, "200", "success", ProviderType, translatedText)
 			os.Exit(0)
 		}
 
 		// Out put nomal
-		fmt.Println(gocolor.Purple("[Before]"))
+		fmt.Printf("%s %s\n", gocolor.Purple("[Before]"), gocolor.Yellow("("+ProviderType+")"))
 		fmt.Println(" ", os.Args[sif(isjson, 3, 2)])
 		fmt.Print("  ↓\n")
 		fmt.Println(gocolor.Green("[After: " + os.Args[sif(isjson, 2, 1)] + "]"))
-		fmt.Println(" ", resp.Text)
+		fmt.Println(" ", translatedText)
 	}
 }

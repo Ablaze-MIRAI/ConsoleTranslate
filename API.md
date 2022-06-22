@@ -2,7 +2,27 @@
 
 ConsoleTranslateで使用するAPIのAPIキーを発行します
 
-## 手順
+# 手順
+
+DeepL翻訳とGoogle翻訳のどちらを使用するか選ぶことができます。どちらも無料です(DeepLには有料プランあり)
+
+- Google翻訳(GAS)の場合はGoogleアカウント1つでセットアップでき、手軽に利用することができます。
+
+- DeepLの場合は少し登録は大変ですが、DeepLの高精度翻訳を利用できます
+
+[GoogleTranslate(GAS)で発行](#googletranslategasで発行)
+
+[DeepLで発行](#deeplで発行)
+
+## DeepLで発行
+
+1. [DeepL APIに登録](https://www.deepl.com/pro-api?cta=header-pro-api) にて登録してください。
+
+2. [DeepLのアカウント](https://www.deepl.com/ja/account/summary/) の1番下にある`DeepL APIで使用する認証キー`をコピーしてください
+
+3. [⚡ インストール](./README.md#-インストール)の`5.`へ戻り設定を続けてください
+
+## GoogleTranslate(GAS)で発行
 
 1. Googleアカウントにログインした状態で https://script.google.com/ にアクセスしします
 

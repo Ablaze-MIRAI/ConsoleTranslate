@@ -2,8 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -18,7 +21,8 @@ func errorMsgs(ErrorNumber int, OutPutType string, custom string) string {
 		{"400", "respose_error", "リクエストに失敗しました"},
 		{"400", "parse_error", "リクエストの解析に失敗しました"},
 		{"500", "translation_error", "翻訳に失敗しました\n翻訳に対応している言語は `" + gocolor.Purple("https://cloud.google.com/translate/docs/languages") + "` を参照してください。"},
-		{"400", "config_error", "設定ファイルの読み込み失敗しました\n設定の方法は `" + gocolor.Purple(repo) + "` を参照してください"}}
+		{"400", "config_error", "設定ファイルの読み込み失敗しました\n設定の方法は `" + gocolor.Purple(repo) + "` を参照してください"},
+		{"400", "deepl_quota_limit", "DeepL API呼び出し上限に達しました"}}
 
 	if OutPutType == "console" {
 		return gocolor.Red("Error["+strconv.Itoa(ErrorNumber)+"]: ") + errors[ErrorNumber][2] + custom
@@ -119,4 +123,68 @@ func Translate(URL string) (*Response, int, string, error) {
 	}
 
 	return result, -1, "", nil
+}
+
+type DeepLResponse struct {
+	Translations []struct {
+		DetectedSourceLanguage string `json:"detected_source_language"`
+		Text                   string `json:"text"`
+	} `json:"translations"`
+}
+
+func TranslateDeepL(Text string, Target string, ApiType string, ApiKey string) (*DeepLResponse, int, string, error) {
+	// Create URL
+	var host string
+	if ApiType == "pro" {
+		host = "api.deepl.com"
+	} else {
+		host = "api-free.deepl.com"
+	}
+	values := url.Values{}
+	values.Add("auth_key", ApiKey)
+	values.Add("target_lang", Target)
+	values.Add("text", Text)
+
+	// Create Request
+	resp, err := http.PostForm("https://"+host+"/v2/translate", values)
+	if err != nil {
+		return nil, 1, "", err
+	}
+
+	// Set Request Close
+	defer resp.Body.Close()
+
+	// Check Response Code
+	if resp.StatusCode == 404 {
+		return nil, 4, resp.Status, err
+	}
+
+	if resp.StatusCode == 456 {
+		return nil, 5, resp.Status, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, 2, resp.Status, err
+	}
+
+	// Purse Request Body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, 3, "", err
+	}
+
+	fmt.Println(string(body))
+
+	// Purse JSON
+	var response *DeepLResponse
+	if err := json.Unmarshal([]byte(string(body)), &response); err != nil {
+		return nil, 3, "", err
+	}
+
+	if response.Translations[0].Text == "" {
+		return nil, 3, "", nil
+	}
+
+	// レスポンスを取得し出力
+	return response, -1, "", nil
 }

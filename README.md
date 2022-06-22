@@ -30,20 +30,33 @@ translate json en こんにちは
 
 # ⚡ インストール
 
-### ⚠ `1`と`5`の手順は1系(1.x.x)と同じなので、1系をお使いの方はバイナリを置き換えるだけで使用できます
+#### ⚠ 設定ファイル(config.json)は1系(1.x.x)と同じなので、1系をお使いの方はバイナリを置き換えるだけで使用できます
 
-1. [APIキー発行](./API.md)を参考にGAS(Google Apps Script)でAPIキーを発行
+1. [Latest Release](https://github.com/Ablaze-MIRAI/ConsoleTranslate/releases) からビルド済みバイナリをダウンロード
 
-2. [Latest Release](https://github.com/Ablaze-MIRAI/ConsoleTranslate/releases) からビルド済みバイナリをダウンロード
+2. ダウンロードしたバイナリを解凍して好きなディレクトリへ移動
 
-3. ダウンロードしたバイナリを解凍して好きなディレクトリへ移動
+3. バイナリを置いたディレクトリにパスを通す
 
-4. バイナリを置いたディレクトリにパスを通す
+4. *DeepL*(v2.0.3より対応)または*GoogleTranslate(GAS)*のAPIキーを発行してください。[APIキー発行の手順(DeepL・Google共通)](./API.md)を参考にしてください。
 
-5. `config.json` の `api` に `1` で発行したAPIキーを設定
+
+5. `config.json`に`4.`で発行したAPIキーを設定します。
+
+- Google Translate(GAS)でAPIキーを発行した場合
 
 ```json
-{"api": "<<ここにAPIキーを設定>>"}
+{"api": "[ここにAPIキーを設定]"}
+```
+
+- DeepLでAPIキーを発行した場合
+
+アカウントタイプはDeepL Freeの場合は`free`をDeepL Proの場合は`pro`を設定してください。
+
+APIキーは[APIキー発行の手順(DeepL・Google共通)](./API.md)で発行したAPIキー(認証キー)を設定してください
+
+```json
+{"api": "deepl,[アカウントタイプ],[APIキー]"}
 ```
 
 ### お疲れ様でした。これでご使用いただけます🎉
