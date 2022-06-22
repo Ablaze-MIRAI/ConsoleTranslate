@@ -1,4 +1,4 @@
-# APIキー発行
+# APIキー発行の手順(DeepL・Google共通)
 
 ConsoleTranslateで使用するAPIのAPIキーを発行します
 
