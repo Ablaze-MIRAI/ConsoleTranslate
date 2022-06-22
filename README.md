@@ -30,7 +30,7 @@ translate json en こんにちは
 
 # ⚡ インストール
 
-#### ⚠ 設定ファイル(config.json)は1系(1.x.x)と同じなので、1系をお使いの方はバイナリを置き換えるだけで使用できます
+#### ⚠ 設定ファイル(config.json)は1系(1.x.x)と同じなので1系をお使いの方はバイナリを置き換えるだけで使用できます
 
 1. [Latest Release](https://github.com/Ablaze-MIRAI/ConsoleTranslate/releases) からビルド済みバイナリをダウンロード
 
@@ -38,8 +38,9 @@ translate json en こんにちは
 
 3. バイナリを置いたディレクトリにパスを通す
 
-4. *DeepL*(v2.0.3より対応)または*GoogleTranslate(GAS)*のAPIキーを発行してください。[APIキー発行の手順(DeepL・Google共通)](./API.md)を参考にしてください。
-
+4. *DeepL*(v2.0.3より対応)または*GoogleTranslate(GAS)*のAPIキーを発行してください。
+  
+   [APIキー発行の手順(DeepL・Google共通)](./API.md)を参考にしてください。
 
 5. `config.json`に`4.`で発行したAPIキーを設定します。
 
