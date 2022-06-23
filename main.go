@@ -100,6 +100,6 @@ func main() {
 		fmt.Println(" ", os.Args[sif(isjson, 3, 2)])
 		fmt.Print("  ↓\n")
 		fmt.Println(gocolor.Green("[After: " + os.Args[sif(isjson, 2, 1)] + "]"))
-		fmt.Println(" ", translatedText)
+		fmt.Printf(" %s\n", translatedText)
 	}
 }
