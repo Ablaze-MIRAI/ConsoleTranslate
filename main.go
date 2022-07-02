@@ -56,8 +56,10 @@ func main() {
 		}
 
 		//Spinner Start
-		s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
-		s.Start()
+		if isjson {
+			s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+			s.Start()
+		}
 
 		var translatedText string
 		var respDeepL *DeepLResponse
@@ -87,7 +89,9 @@ func main() {
 		}
 
 		//Spinner Stop
-		s.Stop()
+		if isjson {
+			s.Stop()
+		}
 
 		// Out put json
 		if isjson {
