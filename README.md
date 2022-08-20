@@ -47,7 +47,7 @@ translate json en こんにちは
 - Google Translate(GAS)でAPIキーを発行した場合
 
 ```json
-{"api": "[ここにAPIキーを設定]"}
+{"api": "<ここにAPIキーを設定>"}
 ```
 
 - DeepLでAPIキーを発行した場合
@@ -57,7 +57,7 @@ translate json en こんにちは
 APIキーは[APIキー発行の手順(DeepL・Google共通)](./API.md)で発行したAPIキー(認証キー)を設定してください
 
 ```json
-{"api": "deepl,[アカウントタイプ],[APIキー]"}
+{"api": "deepl,<アカウントタイプ>,<APIキー>"}
 ```
 
 ### お疲れ様でした。これでご使用いただけます🎉
