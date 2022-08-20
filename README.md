@@ -42,7 +42,7 @@ translate json en こんにちは
   
    [APIキー発行の手順(DeepL・Google共通)](./API.md)を参考にしてください。
 
-5. `config.json`に`4.`で発行したAPIキーを設定します。
+5. `config.json`を同じ階層に作成し`4.`で発行したAPIキーを設定します。
 
 - Google Translate(GAS)でAPIキーを発行した場合
 
