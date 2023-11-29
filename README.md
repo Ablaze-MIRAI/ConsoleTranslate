@@ -2,11 +2,15 @@
 
 翻訳をコンソール上で行えるツール
 
-<div align="center">
+```bash
+$ translate ja "Hello World"
 
-![ConsoleTranslate](./docs/image_v2.gif)
-
-</div>
+> [Before] (DeepL)
+>  Hello World
+>  ↓
+> [After: ja]
+> ハロー・ワールド
+```
 
 ### ⚠ 1系(1.x.x)とは仕様が1部異なります
 
